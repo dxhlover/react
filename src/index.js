@@ -1,0 +1,28 @@
+//受控组件 非受控组件
+// 输入框获取值:非受控组件:操作dom 很方便
+//受控组件 受状态控制  很快的进行校验 默认值操作 缺点 受状态控制
+
+
+import React,{Component} from 'react';
+import {render} from 'react-dom';
+// react 一般都是操作数据
+// 16.3的api  React.createRef  1.方便 2可以和一些第三方库结合使用
+class Control extends Component{
+    state={
+        a:1
+    }
+
+    render(){
+        return (
+            <div>
+                <input type="text" value={this.state.a} />
+            </div>
+        )
+    }
+
+}
+
+render(<Control></Control>,window.root);
+
+
+
