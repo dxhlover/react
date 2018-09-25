@@ -1,0 +1,16 @@
+{
+  "code":0,
+  "users":[{
+    "id":1,
+    "avatar":"http://img5.imgtn.bdimg.com/it/u=2581410720,3497433927&fm=26&gp=0.jpg",
+    "username":"zfpx1",
+    "content":"今天天气很好"
+    },
+    {
+    "id":2,
+    "avatar":"http://img5.imgtn.bdimg.com/it/u=2581410720,3497433927&fm=26&gp=0.jpg",
+    "username":"zfpx2",
+    "content":"今天天气不错"
+    }
+  ]
+}

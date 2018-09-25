@@ -7,8 +7,9 @@ import React,{Component} from 'react';
 import {render} from 'react-dom';
 // react 一般都是操作数据
 // 16.3的api  React.createRef  1.方便 2可以和一些第三方库结合使用
+// 1.方便 2可以和一些第三方库结合使用
 class UnControl1 extends Component{
-    b=React.createRef();
+    b=React.createRef();//有多少个写多少个
     handleClick = () =>{
         alert(this.a.value);//写法1
         alert(this.b.current.value);//写法2
