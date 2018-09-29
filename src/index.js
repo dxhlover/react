@@ -1,10 +1,7 @@
-
 import React from 'react';
-import {render} from 'react-dom';
-import App from './App'
+import ReactDom from 'react-dom';
+import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 
+import App from './App';
 
-render(<App></App>,window.root);
-
-
-
+ReactDom.render(<App></App>,window.root);

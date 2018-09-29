@@ -1,80 +1,41 @@
+// 根组件 里面可以渲染n个页面级组件
+
 import React,{Component} from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import axios from './request';
-import  Comment from './components/Comment';
-import  List from './components/List';
-// let Context = React.createContext();
-// Context.Provider   Context.Consumer
-import {Provider} from './context'
-//创建上下文
+import Home from './pages/Home';
+import User from './pages/User';
+import Profile from './pages/Profile';
 
-//App.js负责获取数据
+ import {HashRouter as Router,Route,Link,Switch,Redirect} from 'react-router-dom';//开发用这个 带#号
 
-// React API contextApi  实现跨组件传递（不超过3级 都可以传）
+//Link  BBrowserRouter的话是方法 HashRouter的话是链接
+// import {BrowserRouter as Router,Route} from 'react-router-dom';  //上线用这个
 
-//ajax是异步的，就算写到willMount里面也是在render之后执行 肯定会渲染两遍 第一遍是获取数据之前 渲染空数组 第二次获取之后渲染
+//最外层要包一个路由容器
+//路径一般不大写 大写也行
+//Router 只能有一个儿子元素  Router整个项目加一个
 
-export default class App extends React.PureComponent{
-    state = {
-        users:[],
-        count:0
-    };
-    increment = () =>{
-        this.setState({count:this.state.count+1});
-    };
-    addUser = (val)=>{
-        // react 最好不要操作同一个对象
-        // 每次更新状态都需要返回一个新的状态 PureComponent
-        // PureComponent优化了shouldComponentUpdate方法，发现如果返回的是一个状态还是以前的引用地址不会更新
-        // 必须返回新对象
-        console.log(val);
-        let users=[...this.state.users,{avatar:'',content:val,username:'zfpx'}];
-        this.setState({users});
-    };
-    removeById = (id) =>{
-        let users = this.state.users.filter(user=>user.id!==id);
-        this.setState({
-            users
-        });
-    }
-    componentWillMount(){//也可以在这里面获取数据 但是不建议在这个里面获取 因为快要被废弃了
 
-    };
+// 负责路由
 
-    async componentDidMount(){//在这个里面获取数据
-        try{//成功
-            let users = await axios.get('./user.json');
-            //this.setState({users:users});
-            this.setState({users});
-            console.log(users);
-        }catch(e){//失败
-            console.log(e);
-        }
-    };
+import Index from './pages/index'
+export default class App extends Component {
     render(){
         return (
-            //value 规定好的 名字就叫value  value传个对象 {}里面是个对象 是两个{}
-            //
-            <Provider value={{increment:this.increment,color:'red'}}>
-                <div className="container">
-                    <div className="panel panel-danger">
-                        <div className="panel-heading">
-                            评论
-                        </div>
-                        <div className="panel-body">
-                            {/*<List users={this.state.users}></List>*/}
-                            <List {...this.state} removeById={this.removeById}></List>
-                        </div>
-                        <div className="panel-footer">
-                            <Comment addUser={this.addUser}></Comment>
-                        </div>
-                        <div>{this.state.count}</div>
-                    </div>
-                </div>
-            </Provider>
+            <Router>
+                <Index>
+                    {/*Index 组件可以通过属性传参 中间也可以放东西 Index组件会替换掉这中间的代码 为了不让替换掉 在pages/index页面里 写{this.props.children} 通过children把这中间的传到Index  不会被替换掉 父传子 */}
+                    {/*exact={true} 代表的是严格匹配  */}
+                    {/*Switch组件*/}
+                    <Switch>
+                        <Route path='/home' exact={true} component={Home} />
+                        <Route path='/home/123' exact={true} component={Home} />
+                        <Route path='/profile' component={Profile} />
+                        <Route path='/user' component={User} />
+                        <Redirect to="/home" />
+                        {/*Redirect 写在最下面 重定向 都匹配不到跳转到home*/}
+                    </Switch>
+                </Index>
+            </Router>
         )
-    };
+    }
 }
-
-
-
