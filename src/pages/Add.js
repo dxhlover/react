@@ -13,7 +13,7 @@ export default class Add extends Component {
         localStorage.setItem('lists',JSON.stringify(lists));
         this.props.history.push('/user/list');
         console.log(this.props);
-    }
+    };
     render(){
         return (
             <div>

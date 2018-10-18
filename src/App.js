@@ -4,6 +4,9 @@ import React,{Component} from 'react';
 import Home from './pages/Home';
 import User from './pages/User';
 import Profile from './pages/Profile';
+import Login from './pages/Login';
+
+import Protected from './pages/Protected';//受保护的组件 自己写的
 
  import {HashRouter as Router,Route,Link,Switch,Redirect} from 'react-router-dom';//开发用这个 带#号
 
@@ -17,6 +20,10 @@ import Profile from './pages/Profile';
 
 // 负责路由
 
+
+//react 路由渲染有三种方式 component  children默认不匹配也会执行
+
+
 import Index from './pages/index'
 export default class App extends Component {
     render(){
@@ -29,8 +36,15 @@ export default class App extends Component {
                     <Switch>
                         <Route path='/home' exact={true} component={Home} />
                         <Route path='/home/123' exact={true} component={Home} />
-                        <Route path='/profile' component={Profile} />
+                        {/*如果用户没有登录 应该重定向到登录页*/}
+                        {/*<Route path='/profile' component={Profile} />*/}
+
+                        <Protected path='/profile' component={Profile} />
+
+
+
                         <Route path='/user' component={User} />
+                        <Route path='/login' component={Login} />
                         <Redirect to="/home" />
                         {/*Redirect 写在最下面 重定向 都匹配不到跳转到home*/}
                     </Switch>
